@@ -1,7 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -10,8 +11,19 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { signIn } from "@/lib/auth-client";
+import { useState } from "react";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const data = await signIn.email({email, password})
+    console.log(data)
+  }
+
   return (
     <Card className="w-full max-w-sm mx-auto my-20">
       <CardHeader>
@@ -28,9 +40,11 @@ export default function LoginForm() {
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="mail@ejemplo.com"
                 autoComplete="off"
                 required
+                onChange={(e) => setEmail(e.target.value)} 
+                value={email}
               />
             </div>
             <div className="grid gap-2">
@@ -43,16 +57,16 @@ export default function LoginForm() {
                   Olvidaste tu contraseña?
                 </a>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" type="password" required onChange={(e) => setPassword(e.target.value)} value={password}/>
             </div>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" onClick={handleLogin}>
           Iniciar sesion
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" onClick={() => signIn.social({provider: "github"})} type="button">
           Continuar con Github
         </Button>
       </CardFooter>

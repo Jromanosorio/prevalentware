@@ -5,7 +5,7 @@ import { GoGraph, GoPeople, GoProject, GoRepo } from "react-icons/go";
 
 export default function Home() {
   return (
-    <div className="">
+    <div>
       <div className="font-sans border-b-1 px-6 py-4">
         <h1 className="text-[24px] font-bold">Panel administrativo</h1>
         <p>Panel de control del sistema</p>

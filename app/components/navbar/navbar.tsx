@@ -1,7 +1,12 @@
+import { signOut, useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
+import { GoSignOut } from "react-icons/go";
 
 export default function Navbar() {
+
+    const session = useSession()
+
     return (
         <nav className="flex justify-between items-center gap-10 border-b-2 p-6">
             <Link href={'/'}>
@@ -19,7 +24,12 @@ export default function Navbar() {
                 <ul><Link href={'/users'}>Usuarios</Link></ul>
                 <ul><Link href={'/reports'}>Reportes</Link></ul>
             </div>
-            <button><a href="" className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto">Iniciar sesion</a></button>
+            <button onClick={() => signOut()} className="flex items-center gap-4">
+                <p className="font-semibold">{session.data?.user.name}</p>
+                <a className="rounded-full flex items-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 px-4 cursor-pointer">
+                    <GoSignOut size={20}/> <p>Salir</p>
+                </a>
+            </button>
         </nav>
     )
 }
