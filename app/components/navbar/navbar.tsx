@@ -21,8 +21,12 @@ export default function Navbar() {
             </Link>
             <div className="flex gap-x-4 font-semibold">
                 <ul><Link href={'/finance'}>Ingresos y gastos</Link></ul>
-                <ul><Link href={'/users'}>Usuarios</Link></ul>
-                <ul><Link href={'/reports'}>Reportes</Link></ul>
+                {
+                    session.data?.user.role.toLowerCase() == 'admin' && <>
+                    
+                    <ul><Link href={'/users'}>Usuarios</Link></ul>
+                    <ul><Link href={'/reports'}>Reportes</Link></ul></>
+                }
             </div>
             <button onClick={() => signOut()} className="flex items-center gap-4">
                 <p className="font-semibold">{session.data?.user.name}</p>

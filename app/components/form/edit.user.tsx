@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@/app/interfaces/User";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,39 +12,24 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signIn } from "@/lib/auth-client";
+import { signIn, useSession } from "@/lib/auth-client";
 import { useState } from "react";
 
 interface formProps {
-  data: {
-    id: string
-    name: string
-    role: string
-  };
+  data: User
+  onUpdateFn: (id: string, name: string, role: string) => void;
   onCancelFn: () => void;
 }
 
-export default function EditUserForm({data, onCancelFn}: formProps) {
+export default function EditUserForm({data, onUpdateFn, onCancelFn}: formProps) {
+  const { refetch } = useSession()
+
   const [id, setId] = useState(data.id)
   const [name, setName] = useState(data.name)
   const [role, setRole] = useState(data.role)
 
-  console.log({id, name, role})
-
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const res = await fetch('/api/users/', {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({id, name, role})
-    }) 
-
-    if (res.ok) {
-      alert("Usuario actualizado ✅")
-    } else {
-      alert("Error al actualizar ❌")
-    }
+  const updateData = (user: any) => {
+    onUpdateFn(id, name, role)
   }
 
   return (
@@ -77,7 +63,7 @@ export default function EditUserForm({data, onCancelFn}: formProps) {
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="button" className="w-full" onClick={handleUpdate}>
+        <Button type="button" className="w-full" onClick={updateData}>
           Guardar
         </Button>
         <Button variant="outline" type="button" className="w-full" onClick={onCancelFn}>
