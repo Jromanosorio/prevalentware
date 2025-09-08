@@ -20,8 +20,7 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    const data = await signIn.email({email, password})
-    console.log(data)
+    await signIn.email({email, password})
   }
 
   return (
@@ -32,8 +31,8 @@ export default function LoginForm() {
           Ingresa tus credenciales para ingresar al sistema
         </CardDescription>
       </CardHeader>
+      <form onSubmit={handleLogin}>
       <CardContent>
-        <form>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -60,9 +59,8 @@ export default function LoginForm() {
               <Input id="password" type="password" required onChange={(e) => setPassword(e.target.value)} value={password}/>
             </div>
           </div>
-        </form>
       </CardContent>
-      <CardFooter className="flex-col gap-2">
+      <CardFooter className="flex-col gap-2 mt-4">
         <Button type="submit" className="w-full" onClick={handleLogin}>
           Iniciar sesion
         </Button>
@@ -70,6 +68,7 @@ export default function LoginForm() {
           Continuar con Github
         </Button>
       </CardFooter>
+      </form>
     </Card>
   )
 }

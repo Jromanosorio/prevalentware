@@ -1,110 +1,113 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { useEffect, useState } from "react"
+import { GoAlert, GoDatabase, GoDownload } from "react-icons/go"
+import CardCustomComponent from "../components/card/card"
+import FormatNumber from "@/utils/numberFormatter"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { useSession } from "@/lib/auth-client"
 
-export const description = "An area chart with a legend"
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
-  },
-} satisfies ChartConfig
+interface Transaction {
+  User: string;
+  Date: number;
+  Concept: string;
+  Amount: number
+}
 
 export default function Reports() {
+  const session = useSession()
+
+  const [history, setHistory] = useState<Transaction[]>()
+  const [data, setData] = useState<{}[]>([])
+  const [total, setTotal] = useState(0)
+
+  const fetchData = async () => {
+    const resp = await fetch("/api/transactions")
+    const transactions = await resp.json()
+
+    const ingresos = transactions
+      .filter((transaction: any) => transaction.Concept === "Ingreso")
+      .reduce((acc: number, transaction: any) => acc + Number(transaction.Amount), 0)
+
+    const egresos = transactions
+      .filter((transaction: any) => transaction.Concept === "Egreso")
+      .reduce((acc: number, transaction: any) => acc + Number(transaction.Amount), 0)
+
+    setData([
+      { name: "Ingresos", total: ingresos },
+      { name: "Gastos", total: egresos },
+    ])
+
+    setHistory(transactions)
+    setTotal(ingresos - egresos)
+  }
+
+  const exportCSV = () => {
+    const headers = "Fecha,Concepto,Usuario,Monto\n"
+
+    if (history) {
+      const rows = history.map((transaction) => {
+        const fecha = new Date(transaction.Date).toLocaleDateString("es-CO")
+        return `${fecha},${transaction.Concept},${transaction.User},${transaction.Amount}`
+      })
+        .join("\n")
+
+      const blob = new Blob([headers + rows], { type: "text/csv" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = "history.csv"
+      a.click()
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
-    <Card className="flex w-full max-w-3xl flex-col gap-6 mt-4 mx-auto px-6 py-4">
-      <CardHeader>
-        <CardTitle>Area Chart - Legend</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Area
-              dataKey="mobile"
-              type="natural"
-              fill="var(--color-mobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
-              stackId="a"
-            />
-            <ChartLegend content={<ChartLegendContent />} />
-          </AreaChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - June 2024
-            </div>
-          </div>
+    <div className="flex w-full max-w-3xl flex-col gap-6 m-auto px-6 my-4">
+      {
+        session.data?.user.role.toLowerCase() !== 'admin' 
+        ? <Alert variant="destructive">
+            <GoAlert />
+            <AlertTitle>Oops!</AlertTitle>
+            <AlertDescription>
+              Parece que no tienes permiso para hacer esto
+            </AlertDescription>
+          </Alert> 
+        : <div>
+            <CardCustomComponent icon={<GoDatabase size={24} color="green" />} service="Saldo total" data={`${FormatNumber(total)} COP`} />
+            <Card className="flex w-full max-w-3xl flex-col gap-6 mt-4 mx-auto px-6 py-4">
+              <CardHeader>
+                <CardTitle>Resumen financiero</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width={"100%"} height={300}>
+                  <BarChart data={data}>
+                    <CartesianGrid strokeDasharray="3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip formatter={(value: number) => FormatNumber(value)} />
+                    <Bar dataKey="total" fill="#4f46e5" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+            <Button onClick={exportCSV} className="my-4 cursor-pointer">
+              <GoDownload className="w-4 h-4" /> Exportar CSV
+            </Button>
         </div>
-      </CardFooter>
-    </Card>
+      }
+    </div>
   )
 }

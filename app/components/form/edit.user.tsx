@@ -22,7 +22,6 @@ interface formProps {
 }
 
 export default function EditUserForm({data, onUpdateFn, onCancelFn}: formProps) {
-  const { refetch } = useSession()
 
   const [id, setId] = useState(data.id)
   const [name, setName] = useState(data.name)

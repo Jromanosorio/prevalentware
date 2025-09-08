@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Navbar from "./components/navbar/navbar";
-import Card from "./components/card/card";
+import CardCustomComponent from "./components/card/card";
 import { GoGraph, GoPeople, GoProject, GoRepo } from "react-icons/go";
 
 export default function Home() {
@@ -11,9 +11,9 @@ export default function Home() {
         <p>Panel de control del sistema</p>
       </div>
       <div className="max-w-[1200px] grid grid-cols-[1fr_1fr_1fr] px-6 py-4 justify-items-center gap-10 m-auto">
-        <Card icon={<GoGraph size={24} color="green"/>} service="Gestion Financiera" data={'$200K'} route={"finance"} />
-        <Card icon={<GoPeople size={24} color="blue"/>} service="Gestion de personal" data={'32'} route={"users"} />
-        <Card icon={<GoProject size={24} color="purple"/> } service="Reportes" data={'128'} route={"reports"} />
+        <CardCustomComponent icon={<GoGraph size={24} color="green"/>} service="Ingresos y gastos" data={'Gestion Financiera'} route={"finance"} />
+        <CardCustomComponent icon={<GoPeople size={24} color="blue"/>} service="Gestion de accesos" data={'Usuarios'} route={"users"} />
+        <CardCustomComponent icon={<GoProject size={24} color="purple"/> } service="Revisar informes" data={'Reportes'} route={"reports"} />
       </div>
     </div>
   );

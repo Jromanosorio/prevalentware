@@ -16,10 +16,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import TableFinance from "../components/table/table"
+import TableFinance from "../components/table/table.finance"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useEffect, useState } from "react"
-import { auth } from "@/lib/auth"
 
 const history = [
   {
