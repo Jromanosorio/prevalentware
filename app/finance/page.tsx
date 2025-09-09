@@ -20,44 +20,6 @@ import TableFinance from "../components/table/table.finance"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useEffect, useState } from "react"
 
-const history = [
-  {
-    id: "INV001",
-    concept: "Ingreso",
-    user: "Laura",
-    totalAmount: "$650.00",
-    date: "05/05/2025",
-  },
-  {
-    id: "INV002",
-    concept: "Ingreso",
-    user: "Pedro",
-    totalAmount: "$150.00",
-    date: "16/07/2025",
-  },
-  {
-    id: "INV003",
-    concept: "Egreso",
-    user: "Maria",
-    totalAmount: "-$350.00",
-    date: "27/05/2025",
-  },
-  {
-    id: "INV004",
-    concept: "Ingreso",
-    user: "Maria",
-    totalAmount: "$450.00",
-    date: "01/06/2025",
-  },
-  {
-    id: "INV005",
-    concept: "Egreso",
-    user: "Juan",
-    totalAmount: "-$550.00",
-    date: "02/06/2025",
-  },
-]
-
 export default function Finance() {
   const [amount, setAmount] = useState("")
   const [concept, setConcept] = useState("")

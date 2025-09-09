@@ -18,11 +18,11 @@ export default function TableFinance(props: TableProps) {
       </TableHeader>
       <TableBody>
         {props.data.map((item) => (
-          <TableRow key={item.id} className={item.Concept === "Ingreso" ? "bg-green-300 font-semibold" : "bg-red-200 font-semibold"}>
-            <TableCell>{item.Concept}</TableCell>
-            <TableCell>{item.User}</TableCell>
-            <TableCell>{new Date(item.Date).toLocaleDateString()}</TableCell>
-            <TableCell className="">{FormatNumber(item.Amount)}</TableCell>
+          <TableRow key={item.id} className={item.concept === "Ingreso" ? "bg-green-300 font-semibold" : "bg-red-200 font-semibold"}>
+            <TableCell>{item.concept}</TableCell>
+            <TableCell>{item.user}</TableCell>
+            <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
+            <TableCell className="">{FormatNumber(item.amount)}</TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -123,11 +123,11 @@ const swaggerDefinition = {
         "type": "object",
         "properties": {
           "id": { "type": "string", "example": "txn_12345" },
-          "Amount": { "type": "number", "example": 1500.50 },
-          "Description": { "type": "string", "example": "Pago de cliente" },
-          "Date": { "type": "string", "format": "date-time", "example": "2025-09-08T12:00:00.000Z" },
-          "Concept": { "type": "string", "example": "Ingreso" },
-          "User": { "type": "string", "example": "Pedro Perez" }
+          "amount": { "type": "number", "example": 1500.50 },
+          "description": { "type": "string", "example": "Pago de cliente" },
+          "date": { "type": "string", "format": "date-time", "example": "2025-09-08T12:00:00.000Z" },
+          "concept": { "type": "string", "example": "Ingreso" },
+          "user": { "type": "string", "example": "Pedro Perez" }
         }
       },
       "NewTransaction": {

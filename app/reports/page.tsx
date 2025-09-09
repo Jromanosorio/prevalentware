@@ -17,10 +17,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useSession } from "@/lib/auth-client"
 
 interface Transaction {
-  User: string;
-  Date: number;
-  Concept: string;
-  Amount: number
+  user: string;
+  date: number;
+  concept: string;
+  amount: number
 }
 
 export default function Reports() {
@@ -36,15 +36,15 @@ export default function Reports() {
 
     const ingresos = transactions
       .filter((transaction: any) => transaction.Concept === "Ingreso")
-      .reduce((acc: number, transaction: any) => acc + Number(transaction.Amount), 0)
+      .reduce((acc: number, transaction: any) => acc + Number(transaction.amount), 0)
 
     const egresos = transactions
       .filter((transaction: any) => transaction.Concept === "Egreso")
-      .reduce((acc: number, transaction: any) => acc + Number(transaction.Amount), 0)
+      .reduce((acc: number, transaction: any) => acc + Number(transaction.amount), 0)
 
     setData([
       { name: "Ingresos", total: ingresos },
-      { name: "Gastos", total: egresos },
+      { name: "Egresos", total: egresos },
     ])
 
     setHistory(transactions)
@@ -56,8 +56,8 @@ export default function Reports() {
 
     if (history) {
       const rows = history.map((transaction) => {
-        const fecha = new Date(transaction.Date).toLocaleDateString("es-CO")
-        return `${fecha},${transaction.Concept},${transaction.User},${transaction.Amount}`
+        const fecha = new Date(transaction.date).toLocaleDateString("es-CO")
+        return `${fecha},${transaction.concept},${transaction.user},${transaction.amount}`
       })
         .join("\n")
 
@@ -77,7 +77,7 @@ export default function Reports() {
   return (
     <div className="flex w-full max-w-3xl flex-col gap-6 m-auto px-6 my-4">
       {
-        session.data?.user.role.toLowerCase() !== 'admin' 
+        (session.data?.user as any).role.toLowerCase() !== 'admin' 
         ? <Alert variant="destructive">
             <GoAlert />
             <AlertTitle>Oops!</AlertTitle>

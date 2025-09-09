@@ -52,7 +52,7 @@ export default function Users() {
     return (
         <div className="flex w-full max-w-3xl flex-col gap-6 m-auto px-6 my-4">
             {
-                session?.user.role.toLowerCase() !== 'admin' ? <Alert variant="destructive">
+                (session?.user as any).role.toLowerCase() !== 'admin' ? <Alert variant="destructive">
                     <GoAlert />
                     <AlertTitle>Oops!</AlertTitle>
                     <AlertDescription>

@@ -13,11 +13,11 @@ export async function POST(req: Request) {
 
         const transaction = await prisma.transaction.create({
             data: {
-                Amount: parseFloat(amount),
-                Description: description,
-                Date: date ? new Date(date) : new Date(),
-                Concept: concept,
-                User: session.user.name
+                amount: parseFloat(amount),
+                description: description,
+                date: date ? new Date(date) : new Date(),
+                concept,
+                user: session.user.name
             }
         })
 
@@ -38,7 +38,7 @@ export async function GET(req: Request){
 
         const transactionList = await prisma.transaction.findMany({
             orderBy: {
-                Date: 'desc'
+                date: 'desc'
             }
         })
 

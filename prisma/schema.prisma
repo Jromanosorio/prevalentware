@@ -45,11 +45,11 @@ model Account {
 
 model Transaction {
   id          String @id @default(cuid())
-  Date        DateTime
-  Description String
-  Concept     String
-  Amount      Float
-  User        String
+  date        DateTime
+  description String
+  concept     String
+  amount      Float
+  user        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -60,6 +60,7 @@ model Session {
   user         User     @relation(fields: [userId], references: [id])
   expiresAt    DateTime
   token        String   @unique
+  role         String   @default("admin")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   ipAddress    String

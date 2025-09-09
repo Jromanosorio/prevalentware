@@ -17,10 +17,20 @@ import { useState } from "react";
 export default function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    await signIn.email({email, password})
+    const resp = await signIn.email({email, password})
+
+    if(resp.error){
+      if (resp.error.message?.includes("not found")) {
+        setError("La cuenta no existe.");
+      } else {
+        setError("Correo o contraseña incorrectos.");
+      }
+      return;
+    }
   }
 
   return (
@@ -30,6 +40,7 @@ export default function LoginForm() {
         <CardDescription>
           Ingresa tus credenciales para ingresar al sistema
         </CardDescription>
+        {error && <span className="text-red-500 my-2 text-sm font-bold">{error}</span>}
       </CardHeader>
       <form onSubmit={handleLogin}>
       <CardContent>

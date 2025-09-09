@@ -15,7 +15,7 @@ export default function RegisterForm() {
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault()
-        await signUp.email({ email, password, name, phone })
+        await signUp.email({ email, password, name, phone } as any)
     }
 
     return (

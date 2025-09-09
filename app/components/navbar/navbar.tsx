@@ -22,7 +22,7 @@ export default function Navbar() {
             <div className="flex gap-x-4 font-semibold">
                 <ul><Link href={'/finance'}>Ingresos y gastos</Link></ul>
                 {
-                    session.data?.user.role.toLowerCase() == 'admin' && <>
+                    (session.data?.user as any).role.toLowerCase() == 'admin' && <>
                     
                     <ul><Link href={'/users'}>Usuarios</Link></ul>
                     <ul><Link href={'/reports'}>Reportes</Link></ul></>

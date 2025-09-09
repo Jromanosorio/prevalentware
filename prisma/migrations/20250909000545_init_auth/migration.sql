@@ -19,6 +19,7 @@ CREATE TABLE "public"."Account" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "accountId" TEXT NOT NULL,
+    "password" TEXT,
     "accessToken" TEXT,
     "scope" TEXT,
     "providerId" TEXT NOT NULL,
@@ -30,11 +31,26 @@ CREATE TABLE "public"."Account" (
 );
 
 -- CreateTable
+CREATE TABLE "public"."Transaction" (
+    "id" TEXT NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "description" TEXT NOT NULL,
+    "concept" TEXT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "user" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."Session" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
     "token" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'admin',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ipAddress" TEXT NOT NULL,
