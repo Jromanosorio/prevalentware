@@ -1,8 +1,13 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
+// Controller para guardar los registros de transacciones
+
 export async function POST(req: Request) {
     try {
+
+        // Comprobacion de la sesion para proteger la ruta
+
         const session = await auth.api.getSession({headers: req.headers})
 
         if(!session){
@@ -27,6 +32,8 @@ export async function POST(req: Request) {
         console.log(error)
     }
 }
+
+// Controller para obtener los registros de transacciones
 
 export async function GET(req: Request){
     try {

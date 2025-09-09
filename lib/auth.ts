@@ -5,6 +5,8 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
+
+// Uso de Github para iniciar sesion y a su vez Email y Password
   emailAndPassword:{
     enabled: true,
   },
@@ -12,8 +14,7 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      redirectURI: (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000") +
-      "/api/auth/callback/github",
+      redirectURI: (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000") + "/api/auth/callback/github",
     }
   },
   database: prismaAdapter(prisma, {

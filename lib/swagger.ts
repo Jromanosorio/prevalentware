@@ -1,5 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc"
 
+// Documentacion de los endpoints de la API
+
 const swaggerDefinition = {
   "openapi": "3.0.3",
   "info": {

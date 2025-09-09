@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Navbar from "./components/navbar/navbar";
 import CardCustomComponent from "./components/card/card";
-import { GoGraph, GoPeople, GoProject, GoRepo } from "react-icons/go";
+import { GoGraph, GoPeople, GoProject } from "react-icons/go";
 
 export default function Home() {
   return (

@@ -30,6 +30,8 @@ export default function Reports() {
   const [data, setData] = useState<{}[]>([])
   const [total, setTotal] = useState(0)
 
+  // Se obtienen los datos de las transacciones y se realiza una suma de cada tipo de movimiento para generar la grafica
+
   const fetchData = async () => {
     const resp = await fetch("/api/transactions")
     const transactions = await resp.json()

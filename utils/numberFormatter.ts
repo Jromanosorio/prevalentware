@@ -1,3 +1,5 @@
+// Funcion para formatear los valores numericos con puntos y comas
+
 export default function FormatNumber(n: number) {
     let numberFormatted
 

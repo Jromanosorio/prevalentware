@@ -27,6 +27,8 @@ export default function Finance() {
   const [description, setDescription] = useState("")
   const [transactionList, setTransactionList] = useState([])
 
+  // Funcion que hace el api call para guardar los movimientos realizados
+
   const handleSaveTransaction = async (e: React.FormEvent) => {
     e.preventDefault()
 
