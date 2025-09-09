@@ -2,9 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
-
 Copiar archivo .env enviado al correo electronico asignado en la raiz del proyecto
+
+First, run the development server:
 
 ```bash
 npm install
