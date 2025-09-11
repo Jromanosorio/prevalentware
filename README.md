@@ -2,9 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Copiar archivo .env enviado al correo electronico asignado en la raiz del proyecto
+
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
 # or
 yarn dev
