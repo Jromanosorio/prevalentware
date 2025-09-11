@@ -37,11 +37,11 @@ export default function Reports() {
     const transactions = await resp.json()
 
     const ingresos = transactions
-      .filter((transaction: any) => transaction.Concept === "Ingreso")
+      .filter((transaction: any) => transaction.concept === "Ingreso")
       .reduce((acc: number, transaction: any) => acc + Number(transaction.amount), 0)
 
     const egresos = transactions
-      .filter((transaction: any) => transaction.Concept === "Egreso")
+      .filter((transaction: any) => transaction.concept === "Egreso")
       .reduce((acc: number, transaction: any) => acc + Number(transaction.amount), 0)
 
     setData([
